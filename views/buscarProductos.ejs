@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Productos</title>
+    <!-- Agregar estilos de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Buscar Productos</h1>
+        <form action="/productos/buscar" method="get" class="mt-3">
+            <div class="form-group">
+                <label for="id">ID del Producto:</label>
+                <input type="text" name="id" id="id" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <% if (productos && productos.length > 0) { %>
+            <h2 class="mt-5">Resultados de la búsqueda</h2>
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Categotia</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% productos.forEach(producto => { %>
+                        <tr>
+                            <td><%= producto.id %></td>
+                            <td><%= producto.nombre %></td>
+                            <td><%= producto.categoria_nombre %></td>
+                            <td><%= producto.precio %></td>
+                            <td>
+                                <a href="/productos/editar/<%= producto.id %>" class="btn btn-sm btn-warning">Editar</a>
+                                <form action="/productos/<%= producto.id %>?_method=DELETE" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else if (productos) { %>
+            <p class="mt-3">No se encontraron productos con ese ID.</p>
+        <% } %>
+    </div>
+
+    <!-- Agregar scripts de Bootstrap (opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

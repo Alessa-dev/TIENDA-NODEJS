@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Clientes</title>
+    <!-- Estilos de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Buscar Clientes por ID</h1>
+        <form action="/clientes/buscar" method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="id" id="id" class="form-control" placeholder="ID del Cliente" required>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+
+        <!-- Mostrar los resultados de la búsqueda si hay alguno -->
+        <% if (clientes.length > 0) { %>
+            <h2 class="mt-4">Resultado de la Búsqueda:</h2>
+            <ul class="list-group">
+                <% clientes.forEach(cliente => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <%= cliente.nombre %> - <%= cliente.email %> - <%= cliente.telefono %>
+                        <div>
+                            <a href="/clientes/editar/<%= cliente.id %>" class="btn btn-outline-primary">Editar</a>
+                            <form action="/clientes/<%= cliente.id %>?_method=DELETE" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p class="mt-4">No se encontraron resultados para el ID proporcionado.</p>
+        <% } %>
+    </div>
+
+    <!-- Scripts de Bootstrap (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
